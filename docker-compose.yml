@@ -10,7 +10,7 @@ services:
       - "8001:8000"
     environment:
       - DATABASE_URI=postgresql://postgres:admin2020@192.168.40.116:5432/movie_db
-      - CAST_SERVICE_HOST_URL=http://localhost:8000/api/v1/casts/
+      - CAST_SERVICE_HOST_URL=http://192.168.40.116:8080/api/v1/casts/
 
   cast_service:
     build: ./cast_service
