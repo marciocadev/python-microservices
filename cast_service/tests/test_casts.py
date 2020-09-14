@@ -20,6 +20,26 @@ def test_create_cast(test_app, monkeypatch):
     assert response.json() == test_response_payload
 
 
+def test_create_cast_invalid_json(test_app, monkeypatch):
+    test_request_payload = { "nationality": "string" }
+
+    async def mock_post(payload):
+        return { 
+            "detail": [ 
+                { 
+                    "loc": [ "body", "name" ], 
+                    "msg": "field required", 
+                    "type": "value_error.missing" 
+                } 
+            ] 
+        }
+
+    monkeypatch.setattr(db_manager, "add_cast", mock_post)    
+
+    response = test_app.post("/api/v1/casts/", data = json.dumps(test_request_payload))
+    assert response.status_code == 422
+    
+    
 def test_read_cast(test_app, monkeypatch):
     test_data = {"id": 1, "name": "string", "nationality": "string" }
 
@@ -44,8 +64,17 @@ def test_read_cast_incorrect_id(test_app, monkeypatch):
     assert response.json()["detail"] == "Cast not found"
 
 
-#def test_create_cast_invalid_json(test_app):
-#    test_request_payload = { "name": "string" }
-#
-#    response = test_app.post("/api/v1/casts/", data = json.dumps(test_request_payload))
-#    assert response.status_code == 422
+def test_read_all_casts(test_app, monkeypatch):
+    test_data = [
+        { "name": "string", "nationality": "string", "id": 1 },
+        { "name": "string", "nationality": None, "id": 2 }
+    ]
+
+    async def mock_get_all():
+        return test_data
+
+    monkeypatch.setattr(db_manager, "get_all", mock_get_all)
+
+    response = test_app.get("/api/v1/casts/")
+    assert response.status_code == 200
+    assert response.json() == test_data

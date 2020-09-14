@@ -12,3 +12,7 @@ async def add_cast(payload: CastIn):
 async def get_cast(id):
     query = casts.select(casts.c.id==id)
     return await database.fetch_one(query=query)
+
+async def get_all():
+    query = casts.select()
+    return await database.fetch_all(query=query)
