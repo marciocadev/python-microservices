@@ -6,9 +6,9 @@ from typing import List
 from app.api.models import CastOut, CastIn, CastUpdate
 from app.api import db_manager
 
-casts = APIRouter()
+router = APIRouter()
 
-@casts.post('/', response_model=CastOut, status_code=201)
+@router.post('/', response_model=CastOut, status_code=201)
 async def create_cast(payload: CastIn):
     cast_id = await db_manager.add_cast(payload)
 
@@ -19,7 +19,7 @@ async def create_cast(payload: CastIn):
 
     return response
 
-@casts.get('/{id}/', response_model=CastOut)
+@router.get('/{id}/', response_model=CastOut)
 async def get_cast(id: int):
     cast = await db_manager.get_cast(id)
     if not cast:
