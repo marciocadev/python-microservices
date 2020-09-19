@@ -11,11 +11,12 @@ DATABASE_URL = os.getenv('DATABASE_URI')
 engine = create_engine(DATABASE_URL)
 metadata = MetaData()
 
-movies = Table(
+users = Table(
     'users',
     metadata,
     Column('id', Integer, primary_key=True),
     Column('username', String(15)),
+    Column('password', String(250)),
     Column('email', String(50)),
     Column('name', String(250)),
     Column('disabled', Boolean)

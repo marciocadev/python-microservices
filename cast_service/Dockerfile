@@ -1,8 +1,4 @@
-FROM python:3.8-slim
-
-# set environment variables
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
+FROM python:3.8-slim AS base
 
 RUN apt-get update \
     && apt-get install gcc -y \
@@ -18,3 +14,24 @@ RUN mkdir /app
 WORKDIR /app
 
 COPY . /app/
+
+########## DEBUGGER ##########
+FROM base AS debug
+
+# set environment variables
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
+COPY ./requirements-dev.txt requirements.txt
+
+RUN pip install -r requirements.txt
+
+########## PRODUCTION ##########
+
+FROM base AS prod
+
+# Switching to a non-root user, please refer to https://aka.ms/vscode-docker-python-user-rights
+RUN adduser --disabled-password appuser \
+    && chown -R appuser /src
+    
+USER appuser

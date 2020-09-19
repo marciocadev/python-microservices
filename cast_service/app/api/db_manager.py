@@ -6,7 +6,6 @@ from app.api.db import casts, database
 
 async def post(payload: CastIn):
     query = casts.insert().values(**payload.dict())
-
     return await database.execute(query=query)
 
 
