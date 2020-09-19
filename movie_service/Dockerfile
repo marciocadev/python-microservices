@@ -7,6 +7,7 @@ RUN apt-get update \
 COPY ./requirements.txt requirements.txt
 
 RUN pip install -r requirements.txt \
+    && apt-get remove gcc -y \
     && rm -rf /root/.cache/pip
     
 RUN mkdir /app

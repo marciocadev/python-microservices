@@ -1,6 +1,5 @@
 #~/movie-service/app/api/movies.py
 
-
 from typing import List
 from fastapi import Header, APIRouter, HTTPException
 

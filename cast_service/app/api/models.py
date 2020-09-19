@@ -3,6 +3,7 @@
 from pydantic import BaseModel
 from typing import List, Optional
 
+
 class CastIn(BaseModel):
     name: str
     nationality: Optional[str] = None

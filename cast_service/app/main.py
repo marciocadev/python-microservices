@@ -1,4 +1,4 @@
-#~/python-microservices/cast-service/app/main.py
+#~/cast-service/app/main.py
 
 from fastapi import FastAPI
 from app.api.casts import casts

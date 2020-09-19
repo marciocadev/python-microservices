@@ -6,9 +6,9 @@ from sqlalchemy import (Column, Integer, MetaData, String, Table,
 
 from databases import Database
 
-DATABASE_URL = os.getenv('DATABASE_URI')
+DATABASE_URI = os.getenv('DATABASE_URI')
 
-engine = create_engine(DATABASE_URL)
+engine = create_engine(DATABASE_URI)
 metadata = MetaData()
 
 movies = Table(
@@ -21,4 +21,4 @@ movies = Table(
     Column('casts_id', ARRAY(Integer))
 )
 
-database = Database(DATABASE_URL)
+database = Database(DATABASE_URI)

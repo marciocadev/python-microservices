@@ -1,4 +1,4 @@
-#~/python-microservices/cast-service/app/api/db_manager.py
+#~/cast-service/app/api/db_manager.py
 
 from app.api.models import CastIn, CastOut, CastUpdate
 from app.api.db import casts, database

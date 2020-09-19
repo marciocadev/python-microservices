@@ -1,4 +1,4 @@
-#~/python-microservices/movie-service/app/api/service.py
+#~/movie-service/app/api/service.py
 
 import os
 import httpx
