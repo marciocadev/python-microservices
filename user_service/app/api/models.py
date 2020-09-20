@@ -6,7 +6,7 @@ from typing import Optional
 
 class Token(BaseModel):
     access_token: str
-    token_str: str
+    token_type: str
 
 
 class TokenData(BaseModel):
@@ -23,6 +23,8 @@ class User(BaseModel):
 class UserIn(User):
     password: str
 
+class UserOut(User):
+    id: int
 
 class UserInDB(User):
     hashed_password: str

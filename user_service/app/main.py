@@ -1,5 +1,6 @@
 #~/user-service/app/main.py
 
+import uvicorn
 from fastapi import FastAPI
 from app.api import users
 from app.api.db import metadata, database, engine
@@ -20,3 +21,7 @@ async def shutdown():
 
 
 app.include_router(users.router, prefix='/api/v1/users', tags=['users'])
+
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=8000)

@@ -17,4 +17,6 @@ RUN pip install -r requirements.txt \
 RUN mkdir /app
 WORKDIR /app
 
-COPY . /app/
+COPY ./app/ .
+
+CMD uvicorn app.main:app --reload --host 0.0.0.0 --port 8000

@@ -13,7 +13,7 @@ RUN pip install -r requirements.txt \
 RUN mkdir /app
 WORKDIR /app
 
-COPY . /app/
+COPY ./app/ /app/
 
 ########## DEBUGGER ##########
 FROM base AS debug
@@ -26,6 +26,8 @@ COPY ./requirements-dev.txt requirements.txt
 
 RUN pip install -r requirements.txt
 
+CMD uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+
 ########## PRODUCTION ##########
 
 FROM base AS prod
@@ -35,3 +37,5 @@ RUN adduser --disabled-password appuser \
     && chown -R appuser /src
     
 USER appuser
+
+CMD uvicorn app.main:app --reload --host 0.0.0.0 --port 8000

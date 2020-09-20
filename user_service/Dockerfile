@@ -13,7 +13,7 @@ RUN pip install -r requirements.txt \
 RUN mkdir /app
 WORKDIR /app
 
-COPY . /app/
+COPY ./app/ .
 
 ########## DEBUGGER ##########
 FROM base AS debug
@@ -26,6 +26,13 @@ COPY ./requirements-dev.txt requirements.txt
 
 RUN pip install -r requirements.txt
 
+RUN ls -la
+RUN python --version
+
+#CMD python -m ptvsd --host 0.0.0.0 --port 5678 --wait --multiprocess -m uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+#CMD python ./app/main.py
+CMD uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+
 ########## PRODUCTION ##########
 
 FROM base AS prod
@@ -35,3 +42,6 @@ RUN adduser --disabled-password appuser \
     && chown -R appuser /src
     
 USER appuser
+
+#CMD python ./app/main.py
+CMD uvicorn app.main:app --reload --host 0.0.0.0 --port 8000

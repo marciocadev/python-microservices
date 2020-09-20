@@ -5,7 +5,7 @@ services:
     build: ./movie_service
     image: movie_service:0.0.1
     container_name: movie_service
-    command: uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+    #command: uvicorn app.main:app --reload --host 0.0.0.0 --port 8001
     volumes:
       - ./movie_service/:/app/
     ports:
@@ -18,6 +18,7 @@ services:
 
   movie_db:
     image: postgres:12.1-alpine
+    container_name: movie_db
     volumes:
       - postgres_data_movie:/var/lib/postgresql/data/
     environment:  
@@ -31,7 +32,7 @@ services:
       target: debug
     image: cast_service:0.0.1
     container_name: cast_service
-    command: uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+    #command: uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
     volumes:
       - ./cast_service/:/app/
     ports:
@@ -43,6 +44,7 @@ services:
 
   cast_db:
     image: postgres:12.1-alpine
+    container_name: cast_db
     volumes:
       - postgres_data_cast:/var/lib/postgresql/data/
     environment:
@@ -56,7 +58,7 @@ services:
       target: debug
     image: user_service:0.0.1
     container_name: user_service
-    command: uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+    #command: uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
     volumes:
       - ./user_service/:/app/
     ports:
@@ -68,6 +70,7 @@ services:
 
   user_db:
     image: postgres:12.1-alpine
+    container_name: user_db
     volumes:
       - postgres_data_user:/var/lib/postgresql/data/
     environment:
@@ -76,7 +79,8 @@ services:
       - POSTGRES_DB=user_db_dev
 
   nginx:
-    image: nginx:latest
+    image: nginx:1.19.2
+    container_name: nginx
     ports:
         - 8080:8080
     volumes:
