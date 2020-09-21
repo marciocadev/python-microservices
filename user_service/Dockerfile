@@ -34,7 +34,6 @@ RUN python --version
 CMD uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 
 ########## PRODUCTION ##########
-
 FROM base AS prod
 
 # Switching to a non-root user, please refer to https://aka.ms/vscode-docker-python-user-rights
