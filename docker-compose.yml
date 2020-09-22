@@ -78,13 +78,28 @@ services:
       - POSTGRES_PASSWORD=user_db_password
       - POSTGRES_DB=user_db_dev
 
+  # nginx:
+  #   image: nginx:1.19.2
+  #   container_name: nginx
+  #   ports:
+  #       - 8080:8080
+  #   volumes:
+  #       - ./nginx_config.conf:/etc/nginx/conf.d/default.conf
+  #   depends_on:
+  #       - user_service
+  #       - cast_service
+  #       - movie_service
+  #       - pgadmin
+
   nginx:
-    image: nginx:1.19.2
-    container_name: nginx
+    build:
+      context: ./angular-front
+      target: run
+    container_name: angular
     ports:
-        - 8080:8080
-    volumes:
-        - ./nginx_config.conf:/etc/nginx/conf.d/default.conf
+        - 8080:80
+    volumes: 
+      - ./nginx.conf:/etc/nginx/nginx.conf
     depends_on:
         - user_service
         - cast_service

@@ -12,7 +12,7 @@ from devtools import debug
 
 router = APIRouter()
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+#oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token2")
 
 @router.post('/', response_model=UserOut, status_code=201)
 async def create_user(payload: UserIn):
@@ -23,8 +23,8 @@ async def create_user(payload: UserIn):
     }
     return response
 
-@router.post("/token", response_model=Token)
-async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends()):
+@router.post("/login", response_model=Token)
+async def login(form_data: OAuth2PasswordRequestForm = Depends()):
     user = await service.authenticate_user(form_data.username, form_data.password)
     if not user:
         raise HTTPException(
@@ -39,10 +39,10 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
     )
     return {"access_token": access_token, "token_type": "bearer"}
 
-@router.get("/items/")
-async def read_items(token: str = Depends(oauth2_scheme)):
-    return {"token": token}
+# @router.get("/token/", response_model=Token)
+# async def read_items(token: str = Depends(service.oauth2_scheme)):
+#     return {"access_token": token, "token_type": "bearer"}
 
-@router.get("users/me", response_model=User)
+@router.get("/me", response_model=User)
 async def read_users_me(current_user: User = Depends(service.get_current_active_user)):
     return current_user

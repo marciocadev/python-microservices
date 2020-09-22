@@ -16,7 +16,7 @@ from app.api import db_manager
 from devtools import debug
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
 
 # to get a string like this run:
 # openssl rand -hex 32
