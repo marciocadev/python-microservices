@@ -2,6 +2,7 @@
 
 import uvicorn
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from app.api import users
 from app.api.db import metadata, database, engine
 
@@ -9,6 +10,13 @@ metadata.create_all(engine)
 
 app = FastAPI(openapi_url="/api/v1/users/openapi.json", docs_url="/api/v1/users/docs")
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+    allow_credentials=True,
+)
 
 @app.on_event("startup")
 async def startup():

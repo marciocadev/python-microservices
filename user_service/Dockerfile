@@ -9,6 +9,9 @@ COPY ./requirements.txt requirements.txt
 RUN pip install -r requirements.txt \
     && apt-get remove gcc -y \
     && rm -rf /root/.cache/pip
+
+RUN apt-get autoremove -y \
+    && apt-get autoclean
     
 RUN mkdir /app
 WORKDIR /app
@@ -25,9 +28,6 @@ ENV PYTHONUNBUFFERED 1
 COPY ./requirements-dev.txt requirements.txt
 
 RUN pip install -r requirements.txt
-
-RUN ls -la
-RUN python --version
 
 #CMD python -m ptvsd --host 0.0.0.0 --port 5678 --wait --multiprocess -m uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 #CMD python ./app/main.py

@@ -3,12 +3,14 @@
 import os
 from sqlalchemy import (Column, Integer, MetaData, String, Table,
                         create_engine, Boolean, and_)
+from sqlalchemy.orm import sessionmaker
 
 from databases import Database
 
 DATABASE_URL = os.getenv('DATABASE_URI')
 
 engine = create_engine(DATABASE_URL)
+session_local = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 metadata = MetaData()
 
 users = Table(
